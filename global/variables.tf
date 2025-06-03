@@ -14,3 +14,8 @@ variable "region" {
   default     = "us-east-2"  # Default region, can be overridden
   
 }
+
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket to be created."
+  type        = string
+}

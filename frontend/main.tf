@@ -13,4 +13,5 @@ module "ecs-fe" {
   ecs_task_execution_policy_name = var.ecs_task_execution_policy_name
   subnet_ids                    = var.subnet_ids
   ecr_image                    = var.ecr_image
+  s3_bucket_name              = var.s3_bucket_name
 }

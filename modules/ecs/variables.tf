@@ -62,3 +62,8 @@ variable "ecr_image" {
   description = "ECR image URI for the ECS task"
   type        = string
 }
+
+variable "s3_bucket_name" {
+  description = "Name of the S3 bucket for task execution"
+  type        = string
+}

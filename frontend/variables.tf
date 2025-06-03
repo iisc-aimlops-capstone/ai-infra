@@ -54,3 +54,8 @@ variable "ecr_image" {
   description = "ECR image URI for the ECS service"
   type        = string
 }
+
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket to be created."
+  type        = string
+}
