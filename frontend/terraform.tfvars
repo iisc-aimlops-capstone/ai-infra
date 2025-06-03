@@ -1,0 +1,10 @@
+name = "ecr-iisc-aimlops-cap-fe-streamlite"
+project = "iisc-aimlops"
+ecs_sg_name = "ecs-sg-iisc-aimlops-cap-fe-streamlite"
+vpc_id = "vpc-009a7f5418d89a433"
+port = 8501
+ecs_cluster_name = "ecs-cluster-iisc-aimlops-cap-fe-streamlite"
+ecs_task_execution_role_name = "iar-ecs-task-execution-role-iisc-aimlops-cap-fe-streamlite"
+ecs_task_execution_policy_name = "iap-ecs-task-execution-policy-iisc-aimlops-cap-fe-streamlite"
+subnet_ids = ["subnet-02a7a02a9f8feff33", "subnet-06ad8298d28daac66"]
+ecr_image = "671336841184.dkr.ecr.us-east-2.amazonaws.com/ecr-iisc-aimlops-cap-fe-streamlite:latest"

@@ -1,5 +1,5 @@
-module "ecr-repository" {
-  source = "./modules/ecr"
+module "ecr-repository-fe" {
+  source = "..//modules/ecr"
 
   name    = var.name
   project = var.project
