@@ -1,0 +1,13 @@
+#name = "ecr-iisc-aimlops-cap-be-fastapi"
+project = "iisc-aimlops"
+ecs_sg_name = "ecs-sg-iisc-aimlops-cap-be-fastapi"
+vpc_id = "vpc-009a7f5418d89a433"
+port = 8000
+ecs_cluster_name = "ecs-cluster-iisc-aimlops-cap-be-fastapi"
+ecs_task_execution_role_name = "iar-ecs-task-execution-role-iisc-aimlops-cap-be-fastapi"
+ecs_task_execution_policy_name = "iap-ecs-task-execution-policy-iisc-aimlops-cap-be-fastapi"
+subnet_ids = ["subnet-02a7a02a9f8feff33", "subnet-06ad8298d28daac66"]
+ecr_image = "671336841184.dkr.ecr.us-east-2.amazonaws.com/ecr-iisc-aimlops-cap-be-fastapi:latest"
+s3_bucket_name = "s3b-iisc-aimlops-cap-images"
+ecs_tg_name = "ecs-tg-iisc-aimlops-cap-be"
+ecs_alb_name = "ecs-alb-iisc-aimlops-cap-be"

@@ -1,5 +1,10 @@
-variable "name" {
+variable "name_fe" {
   description = "The name of the ECR repository."
+  type        = string
+}
+
+variable "name_be" {
+  description = "The name of the backend ECR repository."
   type        = string
 }
 

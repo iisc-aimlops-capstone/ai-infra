@@ -1,7 +1,17 @@
 module "ecr-repository-fe" {
   source = "..//modules/ecr"
 
-  name    = var.name
+  name    = var.name_fe
+  project = var.project
+
+  # Uncomment the following line to use a customer-managed KMS key
+  # kms_key_arn = aws_kms_key.ecr_kms_key.arn
+}
+
+module "ecr-repository-be" {
+  source = "..//modules/ecr"
+
+  name    = var.name_be
   project = var.project
 
   # Uncomment the following line to use a customer-managed KMS key
