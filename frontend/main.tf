@@ -14,4 +14,6 @@ module "ecs-fe" {
   subnet_ids                    = var.subnet_ids
   ecr_image                    = var.ecr_image
   s3_bucket_name              = var.s3_bucket_name
+  ecs_tg_name                   = var.ecs_tg_name
+  ecs_alb_name                  = var.ecs_alb_name
 }

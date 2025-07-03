@@ -59,3 +59,12 @@ variable "s3_bucket_name" {
   description = "The name of the S3 bucket to be created."
   type        = string
 }
+
+variable "ecs_tg_name" {
+  description = "Name of the ECS target group"
+  type        = string
+}
+variable "ecs_alb_name" {
+  description = "Name of the ECS Application Load Balancer"
+  type        = string
+}
