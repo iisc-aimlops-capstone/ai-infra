@@ -9,5 +9,3 @@ ecs_task_execution_policy_name = "iap-ecs-task-execution-policy-iisc-aimlops-cap
 subnet_ids = ["subnet-02a7a02a9f8feff33", "subnet-06ad8298d28daac66"]
 ecr_image = "671336841184.dkr.ecr.us-east-2.amazonaws.com/ecr-iisc-aimlops-cap-be-fastapi:latest"
 s3_bucket_name = "s3b-iisc-aimlops-cap-images"
-ecs_tg_name = "ecs-tg-iisc-aimlops-cap-be"
-ecs_alb_name = "ecs-alb-iisc-aimlops-cap-be"

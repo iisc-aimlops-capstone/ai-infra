@@ -68,14 +68,8 @@ variable "s3_bucket_name" {
   type        = string
 }
 
-variable "ecs_tg_name" {
-  description = "Name of the ECS target group"
-  type        = string
-  default     = null
-}
-
-variable "ecs_alb_name" {
-  description = "Name of the ECS Application Load Balancer"
+variable "tg_arn" {
+  description = "arn of the ECS target group"
   type        = string
   default     = null
 }

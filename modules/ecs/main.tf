@@ -86,62 +86,6 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_s3_fullaccess" {
     policy_arn = aws_iam_policy.ecs_task_execution_s3_fullaccess.arn
 }
 
-resource "aws_lb_target_group" "ecs_target_group" {
-    name     = var.ecs_tg_name
-    port     = var.hostPort
-    protocol = "HTTP"
-    target_type = "ip"
-    vpc_id   = var.vpc_id
-
-    health_check {
-        path                = "/docs"
-        interval            = 30
-        timeout             = 5
-        healthy_threshold   = 2
-        unhealthy_threshold = 2
-        matcher             = "200-399"
-    }
-
-    tags = {
-        Name        = "${var.ecs_cluster_name}-target-group"
-        CreatedBy   = "Terraform"
-        Project     = var.project
-    }
-}
-
-resource "aws_lb" "ecs_lb" {
-    name               = var.ecs_alb_name
-    internal           = false
-    load_balancer_type = "application"
-    security_groups    = [aws_security_group.ecs_sg.id]
-    subnets            = var.subnet_ids
-
-    enable_deletion_protection = false
-
-    tags = {
-        Name        = "${var.ecs_cluster_name}-lb"
-        CreatedBy   = "Terraform"
-        Project     = var.project
-    }
-}
-
-resource "aws_lb_listener" "ecs_listener" {
-    load_balancer_arn = aws_lb.ecs_lb.arn
-    port              = var.hostPort
-    protocol          = "HTTP"
-
-    default_action {
-        type             = "forward"
-        target_group_arn = aws_lb_target_group.ecs_target_group.arn
-    }
-
-    tags = {
-        Name        = "${var.ecs_cluster_name}-listener"
-        CreatedBy   = "Terraform"
-        Project     = var.project
-    }
-}
-
 resource "aws_ecs_task_definition" "task_def" {
     family                   = "${var.ecs_cluster_name}-task"
     network_mode             = "awsvpc"
@@ -180,7 +124,7 @@ resource "aws_ecs_service" "svc" {
     }
 
     load_balancer {
-        target_group_arn = aws_lb_target_group.ecs_target_group.arn
+        target_group_arn = var.tg_arn
         container_name   = "${var.ecs_cluster_name}-container"
         container_port   = var.containerPort
     }
