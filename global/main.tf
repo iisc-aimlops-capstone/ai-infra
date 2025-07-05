@@ -27,7 +27,7 @@ module "s3-bucket-images" {
   # Uncomment the following line to use a customer-managed KMS key
   # kms_key_arn = aws_kms_key.s3_kms_key.arn
 }
-
+/*
 module "alb" {
   source = "../modules/alb"
 
@@ -40,4 +40,4 @@ module "alb" {
   be_tg_name         = var.be_tg_name
   certificate_arn    = var.certificate_arn
   project            = var.project
-}
+}*/

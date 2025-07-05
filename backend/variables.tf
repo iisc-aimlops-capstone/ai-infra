@@ -59,7 +59,3 @@ variable "s3_bucket_name" {
   description = "The name of the S3 bucket to be created."
   type        = string
 }
-variable "tg_arn" {
-  description = "Name of the ECS target group"
-  type        = string
-}

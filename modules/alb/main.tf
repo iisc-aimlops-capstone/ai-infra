@@ -24,6 +24,13 @@ resource "aws_security_group" "ai_sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
     egress {
         from_port   = 0
         to_port     = 0
@@ -61,7 +68,7 @@ resource "aws_lb_target_group" "fe" {
     vpc_id   = var.vpc_id
 
     health_check {
-        path                = "/"
+        path                = "/app"
         interval            = 30
         timeout             = 5
         healthy_threshold   = 2
@@ -120,6 +127,22 @@ resource "aws_lb_listener" "https_listener" {
         CreatedBy   = "Terraform"
         Project     = var.project
     }
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.ai_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
 }
 
 resource "aws_lb_listener_rule" "frontend_rule" {

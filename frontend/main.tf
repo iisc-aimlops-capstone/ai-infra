@@ -1,3 +1,7 @@
+data "aws_lb_target_group" "streamlit_tg" {
+  name = "tg-iisc-aimlops-cap-fe"
+}
+
 module "ecs-fe" {
   source = "../modules/ecs"
   ecs_sg_name                   = var.ecs_sg_name
@@ -14,5 +18,5 @@ module "ecs-fe" {
   subnet_ids                    = var.subnet_ids
   ecr_image                    = var.ecr_image
   s3_bucket_name              = var.s3_bucket_name
-  tg_arn                        = var.tg_arn
+  tg_arn                        = data.aws_lb_target_group.streamlit_tg.arn
 }
