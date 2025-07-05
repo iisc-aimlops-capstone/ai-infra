@@ -33,15 +33,7 @@ variable "ecs_cluster_name" {
   type        = string
 }
 
-variable "ecs_task_execution_role_name" {
-  description = "Name of the ECS task execution role"
-  type        = string
-}
 
-variable "ecs_task_execution_policy_name" {
-  description = "Name of the ECS task execution policy"
-  type        = string
-}
 
 variable "subnet_ids" {
   description = "List of subnet IDs for the ECS service"
@@ -72,4 +64,17 @@ variable "tg_arn" {
   description = "arn of the ECS target group"
   type        = string
   default     = null
+}
+
+variable "ecs_task_execution_role_arn" {
+  description = "ARN of the ECS task execution role"
+  type        = string
+}
+variable "ecs_task_definition_name" {
+  description = "Name of the ECS task execution role"
+  type        = string
+}
+variable "ecs_container_name" {
+  description = "Name of the ECS container"
+  type        = string
 }

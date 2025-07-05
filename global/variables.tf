@@ -65,3 +65,33 @@ variable "certificate_arn" {
   description = "ARN of the SSL certificate for HTTPS listener"
   type        = string
 }
+
+variable "ecs_cluster_name" {
+  description = "Name of the ECS cluster"
+  type        = string
+  
+}
+variable "ecs_sg_name_fe" {
+  description = "Name of the ECS security group for frontend"
+  type        = string
+}
+variable "ecs_sg_desc_fe" {
+  description = "Description of the ECS security group for frontend"
+  type        = string
+}
+variable "ecs_sg_name_be" {
+  description = "Name of the ECS security group for backend"
+  type        = string
+}
+variable "ecs_sg_desc_be" {
+  description = "Description of the ECS security group for backend"
+  type        = string
+}
+variable "ecr_image_fe" {
+  description = "ECR image URI for the frontend ECS task"
+  type        = string
+}
+variable "ecr_image_be" {
+  description = "ECR image URI for the backend ECS task"
+  type        = string
+}
