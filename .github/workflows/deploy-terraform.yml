@@ -15,6 +15,10 @@ jobs:
     name: Terraform Init
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./global  # path to your Terraform module
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,7 +49,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Plan
-        run: terraform plan -input=false -var-file="terraform.tfvars"
+        run: terraform plan -out=tfplan
 
   terraform-apply:
     name: Terraform Apply (Requires Approval)
