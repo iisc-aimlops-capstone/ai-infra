@@ -60,51 +60,7 @@ resource "aws_lb" "ai_alb" {
     }
 }
 
-resource "aws_lb_target_group" "fe" {
-    name     = var.fe_tg_name
-    port     = 8501
-    protocol = "HTTP"
-    target_type = "ip"
-    vpc_id   = var.vpc_id
 
-    health_check {
-        path                = "/app"
-        interval            = 30
-        timeout             = 5
-        healthy_threshold   = 2
-        unhealthy_threshold = 2
-        matcher             = "200-399"
-    }
-
-    tags = {
-        Name        = var.fe_tg_name
-        CreatedBy   = "Terraform"
-        Project     = var.project
-    }
-}
-
-resource "aws_lb_target_group" "be" {
-    name     = var.be_tg_name
-    port     = 8000
-    protocol = "HTTP"
-    target_type = "ip"
-    vpc_id   = var.vpc_id
-
-    health_check {
-        path                = "/docs"
-        interval            = 30
-        timeout             = 5
-        healthy_threshold   = 2
-        unhealthy_threshold = 2
-        matcher             = "200-399"
-    }
-
-    tags = {
-        Name        = var.be_tg_name
-        CreatedBy   = "Terraform"
-        Project     = var.project
-    }
-}
 
 resource "aws_lb_listener" "https_listener" {
     load_balancer_arn = aws_lb.ai_alb.arn
@@ -151,7 +107,7 @@ resource "aws_lb_listener_rule" "frontend_rule" {
 
     action {
         type             = "forward"
-        target_group_arn = aws_lb_target_group.fe.arn
+        target_group_arn = var.fe_tg_arn
     }
 
     condition {
@@ -168,7 +124,7 @@ resource "aws_lb_listener_rule" "backend_rule" {
 
     action {
         type             = "forward"
-        target_group_arn = aws_lb_target_group.be.arn
+        target_group_arn = var.be_tg_arn
     }
 
     condition {

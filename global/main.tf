@@ -41,6 +41,18 @@ module "ec2-instance" {
   project           = var.project
 }
 
+module "target_group" {
+  source = "../modules/target_group"
+
+  fe_tg_name = var.fe_tg_name
+  be_tg_name = var.be_tg_name
+  vpc_id     = var.vpc_id
+  project    = var.project
+
+  # Uncomment the following line to use a customer-managed KMS key
+  # kms_key_arn = aws_kms_key.target_group_kms_key.arn
+}
+
 /*
 module "alb" {
   source = "../modules/alb"
@@ -50,8 +62,8 @@ module "alb" {
   vpc_id             = var.vpc_id
   alb_name           = var.alb_name
   subnet_ids         = var.subnet_ids
-  fe_tg_name         = var.fe_tg_name
-  be_tg_name         = var.be_tg_name
+  fe_tg_arn         = module.target_group.fe_target_group_arn
+  be_tg_arn         = module.target_group.be_target_group_arn
   certificate_arn    = var.certificate_arn
   project            = var.project
 }
@@ -62,8 +74,8 @@ module "ecs-cluster" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
 }
-*/
 
+*/
 
 module "ecs-iam_roles" {
   source = "../modules/iam"
@@ -71,7 +83,7 @@ module "ecs-iam_roles" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
   s3_bucket_name   = module.s3-bucket-images.s3_bucket_name
-  secret_arn       = module.secrets.openai_api_secret_arn
+  secret_name       = var.secret_name
   # Uncomment the following lines to use customer-managed KMS keys
   # kms_key_arn = aws_kms_key.ecs_kms_key.arn
   # kms_key_policy = aws_kms_key_policy.ecs_kms_key_policy.json

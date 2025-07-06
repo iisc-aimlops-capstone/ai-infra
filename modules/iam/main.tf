@@ -52,6 +52,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_s3_fullaccess" {
     policy_arn = aws_iam_policy.ecs_task_execution_s3_fullaccess.arn
 }
 
+data "aws_secretsmanager_secret" "openai" {
+  name = var.secret_name  # Replace with your secret name
+}
+
 
 resource "aws_iam_policy" "secrets_access_policy" {
   name        = "${var.ecs_cluster_name}-SecretsAccessPolicy"
@@ -65,7 +69,7 @@ resource "aws_iam_policy" "secrets_access_policy" {
         Action = [
           "secretsmanager:GetSecretValue"
         ]
-        Resource = var.secret_arn
+        Resource = data.aws_secretsmanager_secret.openai.arn
       }
     ]
   })

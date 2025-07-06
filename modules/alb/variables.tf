@@ -24,12 +24,12 @@ variable "subnet_ids" {
   type        = list(string)
 }   
 
-variable "fe_tg_name" {
+variable "fe_tg_arn" {
   description = "Name of the frontend target group"
   type        = string
 }
 
-variable "be_tg_name" {
+variable "be_tg_arn" {
   description = "Name of the backend target group"
   type        = string
 }
