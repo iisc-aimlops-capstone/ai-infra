@@ -55,8 +55,12 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init
+        run: terraform init -input=false
+
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+
 
   terraform-apply:
     name: Terraform Apply (Requires Approval)
