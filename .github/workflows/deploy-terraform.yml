@@ -1,22 +1,31 @@
-name: Terraform Deployment
+name: Terraform Deploy
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
-env:
-  TF_WORKING_DIR: global
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
-  terraform-init-plan:
-    name: Terraform Init & Plan
+  terraform:
+    name: Terraform Plan and Apply
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./global  # path to your Terraform module
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Replace with your AWS region
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -24,50 +33,27 @@ jobs:
           terraform_version: 1.6.6
 
       - name: Terraform Init
-        working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform init
 
-      - name: Terraform Format
-        working-directory: ${{ env.TF_WORKING_DIR }}
+      - name: Terraform Format Check
         run: terraform fmt -check
 
+      - name: Terraform Validate
+        run: terraform validate
+
       - name: Terraform Plan
-        working-directory: ${{ env.TF_WORKING_DIR }}
+        id: plan
         run: terraform plan -out=tfplan
 
-      - name: Upload Plan Artifact
-        uses: actions/upload-artifact@v4
+      - name: Wait for Manual Approval
+        uses: trstringer/manual-approval@v1
         with:
-          name: tfplan
-          path: global/tfplan
-
-  terraform-apply:
-    name: Terraform Apply
-    needs: terraform-init-plan
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      # Manual approval must be enabled in this environment in the GitHub UI
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.6.6
-
-      - name: Download Plan Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
-          path: global
-
-      - name: Terraform Init
-        working-directory: ${{ env.TF_WORKING_DIR }}
-        run: terraform init
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: dipanjanbits  # 👈 Replace with your GitHub username
+          minimum-approvals: 1
+          issue-title: "Terraform Apply - Approval Required"
+          issue-body: "Please approve this deployment to apply Terraform changes."
 
       - name: Terraform Apply
-        working-directory: ${{ env.TF_WORKING_DIR }}
+        if: ${{ steps.plan.outcome == 'success' }}
         run: terraform apply -auto-approve tfplan
