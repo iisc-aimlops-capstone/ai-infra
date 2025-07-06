@@ -40,8 +40,8 @@ module "ec2-instance" {
   ec2_instance_name  = var.ec2_instance_name
   project            = var.project
 }
-/*
 
+/*
 module "alb" {
   source = "../modules/alb"
 
@@ -62,6 +62,8 @@ module "ecs-cluster" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
 }
+*/
+
 
 module "ecs-iam_roles" {
   source = "../modules/iam"
@@ -69,6 +71,7 @@ module "ecs-iam_roles" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
   s3_bucket_name = module.s3-bucket-images.s3_bucket_name
+  secret_arn = module.secrets.openai_api_secret_arn
   # Uncomment the following lines to use customer-managed KMS keys
   # kms_key_arn = aws_kms_key.ecs_kms_key.arn
   # kms_key_policy = aws_kms_key_policy.ecs_kms_key_policy.json
@@ -81,8 +84,7 @@ module "ecs-service-fe" {
   vpc_id                        = var.vpc_id
   from_port                     = 8501
   to_port                       = 8501
-  containerPort                 = 8501
-  hostPort                      = 8501
+  port                           = 8501
   project                       = var.project
   ecs_cluster_name              = var.ecs_cluster_name
   subnet_ids                    = var.subnet_ids
@@ -92,6 +94,7 @@ module "ecs-service-fe" {
   ecs_task_execution_role_arn   = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name      = "${var.ecs_cluster_name}-task-fe"
   ecs_container_name            = "${var.ecs_cluster_name}-container-fe"
+  secret_name                   = var.secret_name
 }
 
 module "ecs-service-be" {
@@ -101,8 +104,7 @@ module "ecs-service-be" {
   vpc_id                        = var.vpc_id
   from_port                     = 8000
   to_port                       = 8000
-  containerPort                 = 8000
-  hostPort                      = 8000
+  port                         = 8000
   project                       = var.project
   ecs_cluster_name              = var.ecs_cluster_name
   subnet_ids                    = var.subnet_ids
@@ -112,6 +114,5 @@ module "ecs-service-be" {
   ecs_task_execution_role_arn   = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name      = "${var.ecs_cluster_name}-task-be"
   ecs_container_name            = "${var.ecs_cluster_name}-container-be"
+  secret_name                   = var.secret_name
 }
-
-*/

@@ -51,3 +51,27 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_s3_fullaccess" {
     role       = aws_iam_role.ecs_task_execution.name
     policy_arn = aws_iam_policy.ecs_task_execution_s3_fullaccess.arn
 }
+
+
+resource "aws_iam_policy" "secrets_access_policy" {
+  name        = "${var.ecs_cluster_name}-SecretsAccessPolicy"
+  description = "Allow ECS Task to access OpenAI secret"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = var.secret_arn
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_secrets_access" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.secrets_access_policy.arn
+}

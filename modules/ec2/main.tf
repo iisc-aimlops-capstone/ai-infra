@@ -15,8 +15,8 @@ resource "aws_security_group" "ec2_sg" {
     vpc_id      = var.vpc_id
 
     ingress {
-        from_port   = 0
-        to_port     = 0
+        from_port   = 22
+        to_port     = 22
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
@@ -52,5 +52,6 @@ resource "aws_instance" "amazon_linux" {
     Name = var.ec2_instance_name
     Project = var.project
     CreatedBy = "Terraform"
+    AutoStop = "true"  # Tag to indicate this instance should be auto-stopped
   }
 }

@@ -13,3 +13,5 @@ crash.log
 
 # lock
 .terraform.lock.hcl
+
+secret.auto.tfvars

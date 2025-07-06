@@ -23,7 +23,9 @@ resource "aws_security_group" "ecs_sg" {
     }
 }
 
-
+data "aws_secretsmanager_secret" "openai" {
+  name = var.secret_name  # Replace with your secret name
+}
 
 
 resource "aws_ecs_task_definition" "task_def" {
@@ -41,14 +43,23 @@ resource "aws_ecs_task_definition" "task_def" {
             essential = true
             portMappings = [
                 {
-                    containerPort = var.containerPort
-                    hostPort      = var.hostPort
+                    containerPort = var.port
+                    hostPort      = var.port
                     protocol      = "tcp"
                 }
+            ]
+            environment = []
+            secrets = [
+              {
+                name      = "OPENAI_API_KEY"
+                valueFrom = data.aws_secretsmanager_secret.openai.arn
+              }
             ]
         }
     ])
 }
+
+
 /*
 data "aws_ecs_cluster" "ai_cluster" {
   cluster_name = var.ecs_cluster_name

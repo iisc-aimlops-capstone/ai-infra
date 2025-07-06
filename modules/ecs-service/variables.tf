@@ -40,12 +40,8 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
-variable "containerPort" {
-  description = "Port on which the container listens"
-  type        = number
-}
 
-variable "hostPort" {
+variable "port" {
     description = "Port on which the host listens"
     type        = number
 }
@@ -76,5 +72,10 @@ variable "ecs_task_definition_name" {
 }
 variable "ecs_container_name" {
   description = "Name of the ECS container"
+  type        = string
+}
+
+variable "secret_name" {
+  description = "Name of the secret in AWS Secrets Manager"
   type        = string
 }
