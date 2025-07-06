@@ -83,7 +83,7 @@ module "ecs-iam_roles" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
   s3_bucket_name   = module.s3-bucket-images.s3_bucket_name
-  secret_name       = var.secret_name
+  secret_name      = var.secret_name
   # Uncomment the following lines to use customer-managed KMS keys
   # kms_key_arn = aws_kms_key.ecs_kms_key.arn
   # kms_key_policy = aws_kms_key_policy.ecs_kms_key_policy.json
