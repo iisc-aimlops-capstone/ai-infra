@@ -1,0 +1,62 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches: [ main ]  # or your preferred branch
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+jobs:
+  terraform:
+    name: Terraform Plan and Apply
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./global  # path to your Terraform module
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2  # Replace with your AWS region
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan
+
+      - name: Wait for Manual Approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: dipanjanbits  # 👈 Replace with your GitHub username
+          minimum-approvals: 1
+          issue-title: "Terraform Apply - Approval Required"
+          issue-body: "Please approve this deployment to apply Terraform changes."
+
+      - name: Terraform Apply
+        if: ${{ steps.plan.outcome == 'success' }}
+        run: terraform apply -auto-approve tfplan
