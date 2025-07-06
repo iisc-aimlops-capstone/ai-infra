@@ -1,6 +1,8 @@
 name: Terraform Deploy
 
 on:
+  push:
+    branches: [ main ]  # or your preferred branch
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 permissions:

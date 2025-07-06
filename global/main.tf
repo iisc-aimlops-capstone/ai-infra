@@ -102,7 +102,7 @@ module "ecs-service-fe" {
   subnet_ids                  = var.subnet_ids
   ecr_image                   = var.ecr_image_fe
   s3_bucket_name              = module.s3-bucket-images.s3_bucket_name
-  tg_arn                      = module.alb.target_group_arn_fe
+  tg_arn                      = module.target_group.fe_target_group_arn
   ecs_task_execution_role_arn = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-fe"
   ecs_container_name          = "${var.ecs_cluster_name}-container-fe"
@@ -122,7 +122,7 @@ module "ecs-service-be" {
   subnet_ids                  = var.subnet_ids
   ecr_image                   = var.ecr_image_be
   s3_bucket_name              = module.s3-bucket-images.s3_bucket_name
-  tg_arn                      = module.alb.target_group_arn_be
+  tg_arn                      = module.target_group.be_target_group_arn
   ecs_task_execution_role_arn = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-be"
   ecs_container_name          = "${var.ecs_cluster_name}-container-be"
