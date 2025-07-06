@@ -16,8 +16,8 @@ variable "project" {
 variable "region" {
   description = "The AWS region where the ECR repository will be created."
   type        = string
-  default     = "us-east-2"  # Default region, can be overridden
-  
+  default     = "us-east-2" # Default region, can be overridden
+
 }
 
 variable "s3_bucket_name" {
@@ -49,7 +49,7 @@ variable "alb_name" {
 variable "subnet_ids" {
   description = "List of subnet IDs where the ALB will be deployed"
   type        = list(string)
-}   
+}
 
 variable "fe_tg_name" {
   description = "Name of the frontend target group"
@@ -69,7 +69,7 @@ variable "certificate_arn" {
 variable "ecs_cluster_name" {
   description = "Name of the ECS cluster"
   type        = string
-  
+
 }
 variable "ecs_sg_name_fe" {
   description = "Name of the ECS security group for frontend"

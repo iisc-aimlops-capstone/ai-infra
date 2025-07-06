@@ -1,4 +1,4 @@
 provider "aws" {
-  region = var.region  # Change as needed
+  region = var.region # Change as needed
   #profile = "terraform-user"
 }
