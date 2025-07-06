@@ -28,6 +28,20 @@ module "s3-bucket-images" {
   # kms_key_arn = aws_kms_key.s3_kms_key.arn
 }
 
+module "ec2-instance" {
+  source = "../modules/ec2"
+
+  ec2_sg_name        = var.ec2_sg_name
+  ec2_sg_desc        = var.ec2_sg_desc
+  vpc_id             = var.vpc_id
+  instance_type      = var.instance_type
+  subnet_id          = var.subnet_id
+  key_name           = var.key_name
+  ec2_instance_name  = var.ec2_instance_name
+  project            = var.project
+}
+/*
+
 module "alb" {
   source = "../modules/alb"
 
@@ -99,3 +113,5 @@ module "ecs-service-be" {
   ecs_task_definition_name      = "${var.ecs_cluster_name}-task-be"
   ecs_container_name            = "${var.ecs_cluster_name}-container-be"
 }
+
+*/
