@@ -126,11 +126,7 @@ variable "ec2_instance_name" {
   description = "Name of the EC2 instance"
   type        = string
 }
-variable "openai_api_key" {
-  description = "OpenAI API key to be stored in AWS Secrets Manager"
-  type        = string
-  sensitive   = true
-}
+
 
 variable "secret_name" {
   description = "Name of the AWS Secrets Manager secret"
