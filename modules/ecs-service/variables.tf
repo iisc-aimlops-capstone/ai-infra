@@ -79,3 +79,8 @@ variable "secret_name" {
   description = "Name of the secret in AWS Secrets Manager"
   type        = string
 }
+
+variable "cloudwatch_name" {
+  description = "The name of the CloudWatch log group"
+  type        = string
+}

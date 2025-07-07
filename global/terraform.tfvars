@@ -24,3 +24,5 @@ instance_type     = "t3.medium"
 subnet_id         = "subnet-02a7a02a9f8feff33" # Replace with actual subnet ID
 key_name          = "key-useast2-iisc"         # Replace with actual
 secret_name       = "iisc/Capstone/OpenAIKey"  # Name of the secret in AWS Secrets Manager
+cloudwatch_loggroup_name_fe = "/ecs/iisc-aimlops-cap-fe"
+cloudwatch_loggroup_name_be = "/ecs/iisc-aimlops-cap-be"

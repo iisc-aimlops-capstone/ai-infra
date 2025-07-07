@@ -53,6 +53,23 @@ module "target_group" {
   # kms_key_arn = aws_kms_key.target_group_kms_key.arn
 }
 
+module "cloudwatch_logs_fe" {
+  source = "../modules/cloudwatch"
+
+  cloudwatch_name = var.cloudwatch_loggroup_name_fe
+
+  # Uncomment the following line to use a customer-managed KMS key
+  # kms_key_arn = aws_kms_key.cloudwatch_kms_key.arn
+}
+
+module "cloudwatch_logs_be" {
+  source = "../modules/cloudwatch"
+
+  cloudwatch_name = var.cloudwatch_loggroup_name_be
+
+  # Uncomment the following line to use a customer-managed KMS key
+  # kms_key_arn = aws_kms_key.cloudwatch_kms_key.arn
+}
 
 module "alb" {
   source = "../modules/alb"
@@ -107,6 +124,7 @@ module "ecs-service-fe" {
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-fe"
   ecs_container_name          = "${var.ecs_cluster_name}-container-fe"
   secret_name                 = var.secret_name
+  cloudwatch_name             = var.cloudwatch_loggroup_name_fe
 }
 
 module "ecs-service-be" {
@@ -127,4 +145,5 @@ module "ecs-service-be" {
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-be"
   ecs_container_name          = "${var.ecs_cluster_name}-container-be"
   secret_name                 = var.secret_name
+  cloudwatch_name             = var.cloudwatch_loggroup_name_be
 }

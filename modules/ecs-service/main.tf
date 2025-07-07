@@ -41,6 +41,14 @@ resource "aws_ecs_task_definition" "task_def" {
             name = var.ecs_container_name
             image = var.ecr_image
             essential = true
+            logConfiguration = {
+                logDriver = "awslogs"
+                options = {
+                    awslogs-group         = var.cloudwatch_name
+                    awslogs-region        = "us-east-1" # change based on region
+                    awslogs-stream-prefix = "ecs"
+                }
+            }
             portMappings = [
                 {
                     containerPort = var.port

@@ -132,3 +132,13 @@ variable "secret_name" {
   description = "Name of the AWS Secrets Manager secret"
   type        = string
 }
+
+variable "cloudwatch_loggroup_name_fe" {
+  description = "Name of the CloudWatch log group for frontend"
+  type        = string
+}
+
+variable "cloudwatch_loggroup_name_be" {
+  description = "Name of the CloudWatch log group for backend"
+  type        = string
+}

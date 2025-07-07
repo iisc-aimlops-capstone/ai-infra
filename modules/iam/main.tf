@@ -79,3 +79,33 @@ resource "aws_iam_role_policy_attachment" "attach_secrets_access" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = aws_iam_policy.secrets_access_policy.arn
 }
+
+
+resource "aws_iam_policy" "ecs_cloudwatch_logs_policy" {
+  name        = "${var.ecs_cluster_name}-ECSCloudWatchLogsPolicy"
+  description = "Policy to allow ECS tasks to create log streams and put log events in CloudWatch"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "arn:aws:logs:*:*:log-group:/ecs/*:log-stream:*"
+      },
+      {
+        Effect = "Allow",
+        Action = "logs:CreateLogGroup",
+        Resource = "arn:aws:logs:*:*:log-group:/ecs/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_cloudwatch_logs_policy" {
+  role       = aws_iam_role.ecs_task_execution.name
+  policy_arn = aws_iam_policy.ecs_cloudwatch_logs_policy.arn
+}
