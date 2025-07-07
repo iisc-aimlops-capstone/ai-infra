@@ -53,7 +53,7 @@ module "target_group" {
   # kms_key_arn = aws_kms_key.target_group_kms_key.arn
 }
 
-/*
+
 module "alb" {
   source = "../modules/alb"
 
@@ -75,7 +75,7 @@ module "ecs-cluster" {
   project          = var.project
 }
 
-*/
+
 
 module "ecs-iam_roles" {
   source = "../modules/iam"
