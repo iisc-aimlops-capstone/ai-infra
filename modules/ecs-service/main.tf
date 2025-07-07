@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "task_def" {
                 logDriver = "awslogs"
                 options = {
                     awslogs-group         = var.cloudwatch_name
-                    awslogs-region        = "us-east-1" # change based on region
+                    awslogs-region        = "us-east-2" # change based on region
                     awslogs-stream-prefix = "ecs"
                 }
             }
