@@ -70,7 +70,7 @@ module "cloudwatch_logs_be" {
   # Uncomment the following line to use a customer-managed KMS key
   # kms_key_arn = aws_kms_key.cloudwatch_kms_key.arn
 }
-
+/*
 module "alb" {
   source = "../modules/alb"
 
@@ -92,7 +92,7 @@ module "ecs-cluster" {
   project          = var.project
 }
 
-
+*/
 
 module "ecs-iam_roles" {
   source = "../modules/iam"
@@ -100,7 +100,7 @@ module "ecs-iam_roles" {
   ecs_cluster_name = var.ecs_cluster_name
   project          = var.project
   s3_bucket_name   = module.s3-bucket-images.s3_bucket_name
-  secret_name      = var.secret_name
+  secret_name_arn =   var.secret_name_arn
   # Uncomment the following lines to use customer-managed KMS keys
   # kms_key_arn = aws_kms_key.ecs_kms_key.arn
   # kms_key_policy = aws_kms_key_policy.ecs_kms_key_policy.json
@@ -123,8 +123,10 @@ module "ecs-service-fe" {
   ecs_task_execution_role_arn = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-fe"
   ecs_container_name          = "${var.ecs_cluster_name}-container-fe"
-  secret_name                 = var.secret_name
+  secret_name_arn                 = var.secret_name_arn
   cloudwatch_name             = var.cloudwatch_loggroup_name_fe
+  cpu                         = "256"  # Adjust CPU as needed
+  memory                      = "512"  # Adjust memory as needed
 }
 
 module "ecs-service-be" {
@@ -144,6 +146,8 @@ module "ecs-service-be" {
   ecs_task_execution_role_arn = module.ecs-iam_roles.iam_role_arn
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-be"
   ecs_container_name          = "${var.ecs_cluster_name}-container-be"
-  secret_name                 = var.secret_name
+  secret_name_arn                 = var.secret_name_arn
   cloudwatch_name             = var.cloudwatch_loggroup_name_be
+  cpu                         = "1024"  # Adjust CPU as needed
+  memory                      = "2048"  # Adjust memory as needed
 }

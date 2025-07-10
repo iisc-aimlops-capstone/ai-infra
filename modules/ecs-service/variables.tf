@@ -75,7 +75,7 @@ variable "ecs_container_name" {
   type        = string
 }
 
-variable "secret_name" {
+variable "secret_name_arn" {
   description = "Name of the secret in AWS Secrets Manager"
   type        = string
 }
@@ -83,4 +83,16 @@ variable "secret_name" {
 variable "cloudwatch_name" {
   description = "The name of the CloudWatch log group"
   type        = string
+}
+
+variable "cpu" {
+  description = "CPU units for the ECS task"
+  type        = string
+  default     = "256"
+}
+
+variable "memory" {
+  description = "Memory in MiB for the ECS task"
+  type        = string
+  default     = "512"
 }

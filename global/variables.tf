@@ -128,7 +128,7 @@ variable "ec2_instance_name" {
 }
 
 
-variable "secret_name" {
+variable "secret_name_arn" {
   description = "Name of the AWS Secrets Manager secret"
   type        = string
 }

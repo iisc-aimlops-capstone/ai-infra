@@ -23,17 +23,17 @@ resource "aws_security_group" "ecs_sg" {
     }
 }
 
-data "aws_secretsmanager_secret" "openai" {
+/* data "aws_secretsmanager_secret" "openai" {
   name = var.secret_name  # Replace with your secret name
-}
+} */
 
 
 resource "aws_ecs_task_definition" "task_def" {
     family                   = var.ecs_task_definition_name
     network_mode             = "awsvpc"
     requires_compatibilities = ["FARGATE"]
-    cpu                     = "256"
-    memory                  = "512"
+    cpu                     = var.cpu #"1024"
+    memory                  = var.memory #"2048"
     execution_role_arn      = var.ecs_task_execution_role_arn
     task_role_arn = var.ecs_task_execution_role_arn
     container_definitions = jsonencode([
@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "task_def" {
             secrets = [
               {
                 name      = "OPENAI_API_KEY"
-                valueFrom = data.aws_secretsmanager_secret.openai.arn
+                valueFrom = var.secret_name_arn
               }
             ]
         }

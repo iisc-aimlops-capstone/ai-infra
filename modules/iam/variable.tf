@@ -10,7 +10,8 @@ variable "s3_bucket_name" {
   description = "Name of the S3 bucket for task execution"
   type        = string
 }
-variable "secret_name" {
+variable "secret_name_arn" {
   description = "ARN of the AWS Secrets Manager secret for OpenAI API key"
   type        = string
 }
+
