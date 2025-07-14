@@ -14,4 +14,8 @@ variable "secret_name_arn" {
   description = "ARN of the AWS Secrets Manager secret for OpenAI API key"
   type        = string
 }
+variable "gemini_secret_name_arn" {
+  description = "ARN of the AWS Secrets Manager secret for Gemini API key"
+  type        = string
+}
 

@@ -142,3 +142,8 @@ variable "cloudwatch_loggroup_name_be" {
   description = "Name of the CloudWatch log group for backend"
   type        = string
 }
+
+variable "gemini_secret_name_arn" {
+  description = "ARN of the AWS Secrets Manager secret for Gemini API key"
+  type        = string
+}

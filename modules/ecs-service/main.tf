@@ -61,6 +61,10 @@ resource "aws_ecs_task_definition" "task_def" {
               {
                 name      = "OPENAI_API_KEY"
                 valueFrom = var.secret_name_arn
+              },
+              {
+                name      = "GEMINI_API_KEY"
+                valueFrom = var.gemini_secret_name_arn
               }
             ]
         }

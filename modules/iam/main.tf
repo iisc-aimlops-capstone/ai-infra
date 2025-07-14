@@ -80,6 +80,28 @@ resource "aws_iam_role_policy_attachment" "attach_secrets_access" {
   policy_arn = aws_iam_policy.secrets_access_policy.arn
 }
 
+resource "aws_iam_policy" "gemini_secrets_access_policy" {
+  name        = "${var.ecs_cluster_name}-GeminiSecretsAccessPolicy"
+  description = "Allow ECS Task to access Gemini secret"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = var.gemini_secret_name_arn  # Use the ARN of the secret
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "gemini_attach_secrets_access" {
+  role       = aws_iam_role.ecs_task_execution.name
+  policy_arn = aws_iam_policy.gemini_secrets_access_policy.arn
+}
 
 resource "aws_iam_policy" "ecs_cloudwatch_logs_policy" {
   name        = "${var.ecs_cluster_name}-ECSCloudWatchLogsPolicy"

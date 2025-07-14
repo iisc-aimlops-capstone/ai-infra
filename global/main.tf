@@ -27,7 +27,7 @@ module "s3-bucket-images" {
   # Uncomment the following line to use a customer-managed KMS key
   # kms_key_arn = aws_kms_key.s3_kms_key.arn
 }
-
+/*
 module "ec2-instance" {
   source = "../modules/ec2"
 
@@ -40,7 +40,7 @@ module "ec2-instance" {
   ec2_instance_name = var.ec2_instance_name
   project           = var.project
 }
-
+*/
 module "target_group" {
   source = "../modules/target_group"
 
@@ -70,7 +70,7 @@ module "cloudwatch_logs_be" {
   # Uncomment the following line to use a customer-managed KMS key
   # kms_key_arn = aws_kms_key.cloudwatch_kms_key.arn
 }
-/*
+
 module "alb" {
   source = "../modules/alb"
 
@@ -92,7 +92,7 @@ module "ecs-cluster" {
   project          = var.project
 }
 
-*/
+
 
 module "ecs-iam_roles" {
   source = "../modules/iam"
@@ -101,6 +101,7 @@ module "ecs-iam_roles" {
   project          = var.project
   s3_bucket_name   = module.s3-bucket-images.s3_bucket_name
   secret_name_arn =   var.secret_name_arn
+  gemini_secret_name_arn = var.gemini_secret_name_arn
   # Uncomment the following lines to use customer-managed KMS keys
   # kms_key_arn = aws_kms_key.ecs_kms_key.arn
   # kms_key_policy = aws_kms_key_policy.ecs_kms_key_policy.json
@@ -124,6 +125,7 @@ module "ecs-service-fe" {
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-fe"
   ecs_container_name          = "${var.ecs_cluster_name}-container-fe"
   secret_name_arn                 = var.secret_name_arn
+  gemini_secret_name_arn          = var.gemini_secret_name_arn
   cloudwatch_name             = var.cloudwatch_loggroup_name_fe
   cpu                         = "256"  # Adjust CPU as needed
   memory                      = "512"  # Adjust memory as needed
@@ -147,6 +149,7 @@ module "ecs-service-be" {
   ecs_task_definition_name    = "${var.ecs_cluster_name}-task-be"
   ecs_container_name          = "${var.ecs_cluster_name}-container-be"
   secret_name_arn                 = var.secret_name_arn
+  gemini_secret_name_arn          = var.gemini_secret_name_arn
   cloudwatch_name             = var.cloudwatch_loggroup_name_be
   cpu                         = "1024"  # Adjust CPU as needed
   memory                      = "2048"  # Adjust memory as needed

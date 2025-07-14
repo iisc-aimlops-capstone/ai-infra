@@ -26,3 +26,4 @@ key_name          = "key-useast2-iisc"         # Replace with actual
 secret_name_arn       = "arn:aws:secretsmanager:us-east-2:671336841184:secret:iisc/Capstone/OpenAIKey-BJoekn"  # Name of the secret in AWS Secrets Manager
 cloudwatch_loggroup_name_fe = "/ecs/iisc-aimlops-cap-fe"
 cloudwatch_loggroup_name_be = "/ecs/iisc-aimlops-cap-be"
+gemini_secret_name_arn = "arn:aws:secretsmanager:us-east-2:671336841184:secret:iisc/Capstone/GeminiKey-yR7GG1"

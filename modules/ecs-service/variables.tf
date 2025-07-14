@@ -96,3 +96,8 @@ variable "memory" {
   type        = string
   default     = "512"
 }
+
+variable "gemini_secret_name_arn" {
+  description = "ARN of the AWS Secrets Manager secret for Gemini API key"
+  type        = string
+}
