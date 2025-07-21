@@ -70,7 +70,7 @@ module "cloudwatch_logs_be" {
   # Uncomment the following line to use a customer-managed KMS key
   # kms_key_arn = aws_kms_key.cloudwatch_kms_key.arn
 }
-
+/*
 module "alb" {
   source = "../modules/alb"
 
@@ -93,7 +93,7 @@ module "ecs-cluster" {
 }
 
 
-
+*/
 module "ecs-iam_roles" {
   source = "../modules/iam"
 
@@ -127,8 +127,8 @@ module "ecs-service-fe" {
   secret_name_arn                 = var.secret_name_arn
   gemini_secret_name_arn          = var.gemini_secret_name_arn
   cloudwatch_name             = var.cloudwatch_loggroup_name_fe
-  cpu                         = "256"  # Adjust CPU as needed
-  memory                      = "512"  # Adjust memory as needed
+  cpu                         = "1024"  # Adjust CPU as needed
+  memory                      = "2048"  # Adjust memory as needed
 }
 
 module "ecs-service-be" {
